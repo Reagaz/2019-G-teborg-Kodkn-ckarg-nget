@@ -16,8 +16,5 @@ A map that shows where water tests are done and what type of test that has been 
 ## Programming languages used:
 
 ## Team members:
-August Axelsson
-Oskar Lundberg
-Marcus Aronsson
-Adam Kjäll
+August Axelsson, Oskar Lundberg, Marcus Aronsson, Adam Kjäll
 
