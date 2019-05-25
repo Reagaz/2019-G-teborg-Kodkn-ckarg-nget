@@ -1,21 +1,21 @@
-# 2019-Göteborg-Kodknäckargänget
+# 2019-Gothenburg-Kodknäckargänget
 
-# Team name: 
+## Team name: 
 Kodknäckargänget
 
-# Choosen case:
+## Choosen case:
 Watermark challange
 
-# Description:
+## Description:
 A map that shows where water tests are done and what type of test that has been made.
 
-# Applied open source licence:
+## Applied open source licence:
 
-# Services used:
+## Services used:
 
-# Programming languages used:
+## Programming languages used:
 
-# Team members:
+## Team members:
 August Axelsson
 Oskar Lundberg
 Marcus Aronsson
