@@ -48,7 +48,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         linearLayout = new LinearLayout(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer);
-        t = new ActionBarDrawerToggle(this,drawer,R.string.open,R.string.close);
+        t = new ActionBarDrawerToggle(this,drawer,R.string.open, R.string.close);
 
         drawer.addDrawerListener(t);
         t.syncState();
@@ -127,7 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         tipMode = false;
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View popupView = inflater.inflate(R.layout.addTestPopup, null);
+        final View popupView = inflater.inflate(R.layout.addtestpopup, null);
         Button submitBtnAddBar = (Button) popupView.findViewById(R.id.submitBtn);
         final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.barName);
         TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.beerName);
