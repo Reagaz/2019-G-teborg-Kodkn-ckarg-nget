@@ -2,7 +2,6 @@ package com.adamk.watermark;
 
 import android.location.Location;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean tipMode = false;
     private LinearLayout linearLayout;
     private PopupWindow popupWindow;
-    private FloatingActionButton test;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
@@ -42,30 +40,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
         linearLayout = new LinearLayout(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer);
-        t = new ActionBarDrawerToggle(this,drawer,R.string.open, R.string.close);
+        t = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
 
         drawer.addDrawerListener(t);
         t.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nv = (NavigationView) findViewById(R.id.nav_view_google);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        //hejhej
+
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-                switch (id){
+                switch (id) {
 
-                    case R.id.reportMenuItem:{
+                    case R.id.reportMenuItem: {
                         tipMode = true;
-                        Toast.makeText(MapsActivity.this,"press the fucking map",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivity.this, "press the fucking map", Toast.LENGTH_LONG).show();
                         drawer.closeDrawers();
                     }
 
@@ -73,8 +76,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
-
-
 
 
     }
@@ -129,18 +130,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = inflater.inflate(R.layout.addtestpopup, null);
         Button submitBtnAddBar = (Button) popupView.findViewById(R.id.submitBtn);
-        final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.barName);
-        TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.beerName);
-        TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.beerPrice);
+        final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.ph_value);
+        TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.oxygen_value);
+        TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.turbidity_value);
         submitBtnAddBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(phValue.getText().toString().equals("8")) {
+                if (phValue.getText().toString().equals("8")) {
                     mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.water)));
                     popupWindow.dismiss();
-                }
-                else{
+                } else {
                     mMap.addMarker(new MarkerOptions().position(location).title("bajs water"));
+                    popupWindow.dismiss();
                 }
             }
         });
