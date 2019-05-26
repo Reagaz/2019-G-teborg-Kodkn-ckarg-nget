@@ -186,14 +186,14 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnInfoW
             @Override
             public void onClick(View v) {
                 if (phValue.getText().toString().equals("7") && oxygenLevel.getText().toString().equals("8") && turbidityLevel.getText().toString().equals("3")) {
-                    mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+                    mMap.addMarker(new MarkerOptions().position(location).title("safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
                     popupWindow.dismiss();
 
                 } else {
-                    mMap.addMarker(new MarkerOptions().position(location).title("bajs water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
+                    mMap.addMarker(new MarkerOptions().position(location).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
                     popupWindow.dismiss();
                 }
-                Toast.makeText(MapsActivity.this, "Thanks for your submition", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Thanks for your submission", Toast.LENGTH_SHORT).show();
             }
         });
 
