@@ -73,13 +73,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     case R.id.reportMenuItem: {
                         tipMode = true;
-                        Toast.makeText(MapsActivity.this, "press the fucking map", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivity.this, "press the map", Toast.LENGTH_LONG).show();
                         drawer.closeDrawers();
                     }
 
                     case R.id.helpNeeded: {
                         help = true;
-                        Toast.makeText(MapsActivity.this, "press the fucking map", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivity.this, "press the map", Toast.LENGTH_LONG).show();
                         drawer.closeDrawers();
 
                     }
@@ -114,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng flag = new LatLng(30.374289, 68.612346);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(badWater, 15));
-        mMap.addMarker(new MarkerOptions().position(goodWater).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+        mMap.addMarker(new MarkerOptions().position(goodWater).title("safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
         mMap.addMarker(new MarkerOptions().position(badWater).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
         mMap.addMarker(new MarkerOptions().position(flag).title("Help needed").icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
     }
@@ -156,7 +156,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 mMap.addMarker(new MarkerOptions().position(location).title(helpText.getText().toString()).icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
-                Toast.makeText(MapsActivity.this, "Thanks for your submition", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Thanks for your submission", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
             }
         });
@@ -185,14 +185,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 if (phValue.getText().toString().equals("8")) {
-                    mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+                    mMap.addMarker(new MarkerOptions().position(location).title("Safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
                     popupWindow.dismiss();
 
                 } else {
-                    mMap.addMarker(new MarkerOptions().position(location).title("bajs water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
+                    mMap.addMarker(new MarkerOptions().position(location).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
                     popupWindow.dismiss();
                 }
-                Toast.makeText(MapsActivity.this, "Thanks for your submition", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Thanks for your submission", Toast.LENGTH_SHORT).show();
             }
         });
 
