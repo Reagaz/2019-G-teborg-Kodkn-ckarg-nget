@@ -27,7 +27,10 @@
         android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/cardview_light_background"
+        app:itemIconTint="@color/cardview_light_background"/>
+
 
 
 </android.support.v4.widget.DrawerLayout>

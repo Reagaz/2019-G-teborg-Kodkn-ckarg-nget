@@ -6,19 +6,19 @@
     <group android:id="@+id/group_divider1">
         <item
             android:id="@+id/reportMenuItem"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="Report" />
+            android:icon="@drawable/ic_add_circle_black_24dp"
+            android:title="Add watermark" />
         <item
-            android:id="@+id/profileMenuItem"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="Profile" />
+            android:id="@+id/helpNeeded"
+            android:icon="@drawable/ic_assistant_photo_black_24dp"
+            android:title="Request help" />
         <item
             android:id="@+id/helpmenuItem"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="Help" />
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="Profile" />
         <item
             android:id="@+id/settingsMenuItem"
-            android:icon="@drawable/ic_android_black_24dp"
+            android:icon="@drawable/ic_settings_applications_black_24dp"
             android:title="Settings" />
     </group>
 

@@ -1,5 +1,6 @@
 package com.adamk.watermark;
 
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,15 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMapClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private boolean tipMode = false;
@@ -34,14 +37,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout drawer;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
+    private boolean help = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.mapFragment);
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+
         mapFragment.getMapAsync(this);
         linearLayout = new LinearLayout(this);
 
@@ -56,8 +60,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
         }
-        //hejhej
+
 
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -70,6 +75,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         tipMode = true;
                         Toast.makeText(MapsActivity.this, "press the fucking map", Toast.LENGTH_LONG).show();
                         drawer.closeDrawers();
+                    }
+
+                    case R.id.helpNeeded: {
+                        help = true;
+                        Toast.makeText(MapsActivity.this, "press the fucking map", Toast.LENGTH_LONG).show();
+                        drawer.closeDrawers();
+
                     }
 
                 }
@@ -97,9 +109,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMyLocationButtonClickListener(this);
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng goodWater = new LatLng(-34, 151);
+        LatLng badWater = new LatLng(30.364289, 68.612346);
+        LatLng flag = new LatLng(30.374289, 68.612346);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(badWater, 15));
+        mMap.addMarker(new MarkerOptions().position(goodWater).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+        mMap.addMarker(new MarkerOptions().position(badWater).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
+        mMap.addMarker(new MarkerOptions().position(flag).title("Help needed").icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
     }
 
 
@@ -107,6 +124,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapClick(LatLng latLng) {
         if (tipMode) {
             addTestPopup(latLng);
+        }
+        else if (help) {
+            helpNeeded(latLng);
+
         }
         double lat = latLng.latitude;
         double lng = latLng.longitude;
@@ -123,26 +144,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-
-    public void addTestPopup(final LatLng location) {
-        tipMode = false;
+    public void helpNeeded(final LatLng location) {
+        help = false;
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View popupView = inflater.inflate(R.layout.addtestpopup, null);
+        final View popupView = inflater.inflate(R.layout.help, null);
         Button submitBtnAddBar = (Button) popupView.findViewById(R.id.submitBtn);
-        final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.ph_value);
-        TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.oxygen_value);
-        TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.turbidity_value);
+        final TextInputEditText helpText = (TextInputEditText) popupView.findViewById(R.id.describeHelp);
+
         submitBtnAddBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phValue.getText().toString().equals("8")) {
-                    mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.water)));
-                    popupWindow.dismiss();
-                } else {
-                    mMap.addMarker(new MarkerOptions().position(location).title("bajs water"));
-                    popupWindow.dismiss();
-                }
+                mMap.addMarker(new MarkerOptions().position(location).title(helpText.getText().toString()).icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
+                Toast.makeText(MapsActivity.this, "Thanks for your submition", Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
             }
         });
 
@@ -153,5 +168,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.showAtLocation(linearLayout, Gravity.CENTER, 0, 0);
 
+    }
+
+
+    public void addTestPopup(final LatLng location) {
+        tipMode = false;
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = inflater.inflate(R.layout.addtestpopup, null);
+        Button submitBtnAddBar = (Button) popupView.findViewById(R.id.submitBtn);
+        final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.ph_value);
+        TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.oxygen_value);
+        TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.turbidity_value);
+
+        submitBtnAddBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (phValue.getText().toString().equals("8")) {
+                    mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+                    popupWindow.dismiss();
+
+                } else {
+                    mMap.addMarker(new MarkerOptions().position(location).title("bajs water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
+                    popupWindow.dismiss();
+                }
+                Toast.makeText(MapsActivity.this, "Thanks for your submition", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.showAtLocation(linearLayout, Gravity.CENTER, 0, 0);
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        LatLng lat = marker.getPosition();
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(lat, 16);
+        mMap.moveCamera(update);
+        return false;
     }
 }
