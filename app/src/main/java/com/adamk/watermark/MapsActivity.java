@@ -179,14 +179,14 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnInfoW
         final View popupView = inflater.inflate(R.layout.addtestpopup, null);
         Button submitBtnAddBar = (Button) popupView.findViewById(R.id.submitBtn);
         final TextInputEditText phValue = (TextInputEditText) popupView.findViewById(R.id.ph_value);
-        TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.oxygen_value);
-        TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.turbidity_value);
+        final TextInputEditText oxygenLevel = (TextInputEditText) popupView.findViewById(R.id.oxygen_value);
+        final TextInputEditText turbidityLevel = (TextInputEditText) popupView.findViewById(R.id.turbidity_value);
 
         submitBtnAddBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phValue.getText().toString().equals("8")) {
-                    mMap.addMarker(new MarkerOptions().position(location).title("Safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+                if (phValue.getText().toString().equals("7") && oxygenLevel.getText().toString().equals("8") && turbidityLevel.getText().toString().equals("3")) {
+                    mMap.addMarker(new MarkerOptions().position(location).title("safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
                     popupWindow.dismiss();
 
                 } else {
