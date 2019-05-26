@@ -114,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng flag = new LatLng(30.374289, 68.612346);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(badWater, 15));
-        mMap.addMarker(new MarkerOptions().position(goodWater).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+        mMap.addMarker(new MarkerOptions().position(goodWater).title("safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
         mMap.addMarker(new MarkerOptions().position(badWater).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
         mMap.addMarker(new MarkerOptions().position(flag).title("Help needed").icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
     }
@@ -185,7 +185,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 if (phValue.getText().toString().equals("8")) {
-                    mMap.addMarker(new MarkerOptions().position(location).title("save Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+                    mMap.addMarker(new MarkerOptions().position(location).title("Safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
                     popupWindow.dismiss();
 
                 } else {
