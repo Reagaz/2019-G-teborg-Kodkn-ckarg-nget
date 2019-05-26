@@ -28,7 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private boolean tipMode = false;
@@ -62,7 +62,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
         }
-
 
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -107,16 +106,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
         mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
-        // Add a marker in Sydney and move the camera
-        LatLng goodWater = new LatLng(-34, 151);
-        LatLng badWater = new LatLng(30.364289, 68.612346);
-        LatLng flag = new LatLng(30.374289, 68.612346);
+        LatLng goodWater = new LatLng(30.458446, 68.493935);
+        LatLng badWater = new LatLng(30.420680, 68.501005);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(badWater, 15));
-        mMap.addMarker(new MarkerOptions().position(goodWater).title("safe Water").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
-        mMap.addMarker(new MarkerOptions().position(badWater).title("bad water").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
-        mMap.addMarker(new MarkerOptions().position(flag).title("Help needed").icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
+        LatLng helpFlag = new LatLng(30.364289, 68.612346);
+        LatLng waterTower = new LatLng(30.448371, 68.602058);
+
+        mMap.animateCamera((CameraUpdateFactory.newLatLngZoom(helpFlag, 13)));
+        mMap.addMarker(new MarkerOptions().position(goodWater).title("safe Water").snippet("pH:6.9 Oxygen: 5.3 turbidity: clear").icon(BitmapDescriptorFactory.fromResource(R.drawable.watergoodpng)));
+        mMap.addMarker(new MarkerOptions().position(waterTower).title("Water tower").icon(BitmapDescriptorFactory.fromResource(R.drawable.deposit)));
+        mMap.addMarker(new MarkerOptions().position(helpFlag).title("Help needed").snippet("Water tower malfunction").icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
+        mMap.addMarker(new MarkerOptions().position(badWater).title("Do not drink").snippet("pH:5.7 Oxygen: 2.1 turbidity: unclear").icon(BitmapDescriptorFactory.fromResource(R.drawable.waterbad)));
     }
 
 
@@ -124,8 +126,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapClick(LatLng latLng) {
         if (tipMode) {
             addTestPopup(latLng);
-        }
-        else if (help) {
+        } else if (help) {
             helpNeeded(latLng);
 
         }
@@ -211,5 +212,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(lat, 16);
         mMap.moveCamera(update);
         return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = inflater.inflate(R.layout.info_window, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.showAtLocation(linearLayout, Gravity.CENTER, 0, 0);
+
     }
 }

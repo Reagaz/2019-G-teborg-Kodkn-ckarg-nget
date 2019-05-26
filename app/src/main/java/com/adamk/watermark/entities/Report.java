@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Report {
     private double phValue; // 6.7 optimal
-    private double turbidity; //NTU
+    private double turbidity; //NTU below 3 is nice
     private double tempCelsius;
-    private double dissolvedOxygen; //mg per litre or ppm
+    private double dissolvedOxygen; //mg per litre or ppm, between 5 and 10 is nice
 
     private boolean isSafeToDrink;
 
